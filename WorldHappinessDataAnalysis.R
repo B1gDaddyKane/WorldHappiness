@@ -52,16 +52,22 @@ ct.country.km.15
 ct.region.km.15 <- table(happiness_2015$Region, fit.km.15$cluster)
 ct.region.km.15
 
+#Setting rownames to countries
+rownames(num.15) = happiness_2015$Country
+
 #We partion around medoids (PAM) and make a cluster plot
 set.seed(1234)
-fit.pam.15 <- pam(num.15,k=3,stand = TRUE)
+fit.pam.15 <- pam(num.15,k=2,stand = TRUE)
 fit.pam.15$medoids
-clusplot(fit.pam.15, main="Bivariate Cluster Plot")
+clusplot(fit.pam.15, main="Bivariate Cluster Plot", labels=3, lines=1)
 
 ####----------------HIERARCHICAL CLUSTER ANALYSIS 2015-----------------####
 
 #Removing non-numerical data from 2015 and scaling it.
 num.15 <- happiness_2015[c(-1,-2,-3)]
+
+#Setting rownames to countries
+rownames(num.15) = happiness_2015$Country
 
 #Find ud af hvordan vi får landenavne ind i dataframen uden at fucke med scaling.
 
@@ -89,7 +95,7 @@ aggregate(num.15, by=list(cluster=clusters),median)
 
 aggregate(as.data.frame(df.15),by=list(cluster=clusters),median)
 
-plot(fit.average.15, hang=-1, cex=.5, main="Average Linkage Clustering\n6 Cluster Solution")
+plot(fit.average.15, hang=-1, cex=.7, main="Average Linkage Clustering\n6 Cluster Solution")
 rect.hclust(fit.average.15, k=6)
 
 ####-------------------------Classification 2015------------------------####
