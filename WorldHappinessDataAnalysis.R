@@ -19,7 +19,7 @@ happiness_2019 <- read.csv("2019.csv")
 
 ####------------------------DATA VISUALIZATION--------------------------####
 
-###Bar plot of top 10 countries by GDP
+####Bar plot of top 10 countries by GDP####
 
 #Sort data by GDP
 data_sorted <- happiness_2015[order(-happiness_2015$Economy..GDP.per.Capita.),]
@@ -30,7 +30,7 @@ data_top <- data_sorted[1:10,]
 data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 #Create ggplot object
 plot <- ggplot(data=data_top,
-  aes(x=Country, y=Economy..GDP.per.Capita., fill=Country)) + 
+  aes(x=Country, y=Economy..GDP.per.Capita., fill=Economy..GDP.per.Capita.)) + 
   geom_bar(stat="identity") + 
   theme_minimal() + 
   theme(legend.position="none", axis.title.y=element_blank())
@@ -38,7 +38,118 @@ plot <- ggplot(data=data_top,
 plot + coord_flip()
 
 
+####Bar plot of top 10 countries by Family####
 
+#Sort data by Family
+data_sorted <- happiness_2015[order(-happiness_2015$Family),]
+#Choose top 10 countries by Family
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+               aes(x=Country, y=Family, fill=Family)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
+
+
+####Bar plot of top 10 countries by Life Expectancy####
+
+#Sort data by Life Expectancy
+data_sorted <- happiness_2015[order(-happiness_2015$Health..Life.Expectancy.),]
+#Choose top 10 countries by Life Expectancy
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+               aes(x=Country, y=Health..Life.Expectancy., fill=Health..Life.Expectancy.)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
+
+
+####Bar plot of top 10 countries by Freedom####
+
+#Sort data by Freedom
+data_sorted <- happiness_2015[order(-happiness_2015$Freedom),]
+#Choose top 10 countries by Freedom
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+               aes(x=Country, y=Freedom, fill=Freedom)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
+
+
+####Bar plot of top 10 countries by Trust/Government Corruption####
+
+#Sort data by Trust/Government Corruption
+data_sorted <- happiness_2015[order(-happiness_2015$Trust..Government.Corruption.),]
+#Choose top 10 countries by Trust/Government Corruption
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+               aes(x=Country, y=Trust..Government.Corruption., fill=Trust..Government.Corruption.)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
+
+
+####Bar plot of top 10 countries by Generosity####
+
+#Sort data by Generosity
+data_sorted <- happiness_2015[order(-happiness_2015$Generosity),]
+#Choose top 10 countries by Generosity
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+               aes(x=Country, y=Generosity, fill=Generosity)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
+
+
+####Bar plot of top 10 countries by Dystopia####
+
+#Sort data by Dystopia
+data_sorted <- happiness_2015[order(-happiness_2015$Dystopia.Residual),]
+#Choose top 10 countries by Dystopia
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+               aes(x=Country, y=Dystopia.Residual, fill=Dystopia.Residual)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
 
 
 ####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
