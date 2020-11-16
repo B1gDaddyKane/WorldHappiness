@@ -1,4 +1,5 @@
-install.packages(c("NbClust","cluster","flexclust","rpart","rpart.plot","party","randomForest","e1071"))
+install.packages(c("NbClust","cluster","flexclust","rpart","rpart.plot","party",
+                   "randomForest","e1071", "ggplot2"))
 library("NbClust")
 library("cluster")
 library("flexclust")
@@ -7,6 +8,7 @@ library("rpart.plot")
 library("party")
 library("randomForest")
 library("e1071")
+library("ggplot2")
 
 #Loading all the data.
 happiness_2015 <- read.csv("2015.csv")
@@ -57,9 +59,12 @@ rownames(num.15) = happiness_2015$Country
 
 #We partion around medoids (PAM) and make a cluster plot
 set.seed(1234)
-fit.pam.15 <- pam(num.15,k=2,stand = TRUE)
+fit.pam.15 <- pam(num.15,k=3,stand = TRUE)
 fit.pam.15$medoids
-clusplot(fit.pam.15, main="Bivariate Cluster Plot", labels=3, lines=1)
+clusplot(fit.pam.15, main="Bivariate Cluster Plot")
+
+#ggplot2 version of cluster plot
+
 
 ####----------------HIERARCHICAL CLUSTER ANALYSIS 2015-----------------####
 
