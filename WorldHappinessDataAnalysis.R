@@ -17,6 +17,30 @@ happiness_2017 <- read.csv("2017.csv")
 happiness_2018 <- read.csv("2018.csv")
 happiness_2019 <- read.csv("2019.csv")
 
+####------------------------DATA VISUALIZATION--------------------------####
+
+###Bar plot of top 10 countries by GDP
+
+#Sort data by GDP
+data_sorted <- happiness_2015[order(-happiness_2015$Economy..GDP.per.Capita.),]
+#Choose top 10 countries by GDP
+data_top <- data_sorted[1:10,]
+#Make country a factor and reverse order (a hack to avoid reversal of bars
+#when we do coord_flip)
+data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
+#Create ggplot object
+plot <- ggplot(data=data_top,
+  aes(x=Country, y=Economy..GDP.per.Capita., fill=Country)) + 
+  geom_bar(stat="identity") + 
+  theme_minimal() + 
+  theme(legend.position="none", axis.title.y=element_blank())
+#Display ggplot
+plot + coord_flip()
+
+
+
+
+
 ####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
 
 #Removing non-numerical data from 2015 and scaling it.
