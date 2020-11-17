@@ -1,5 +1,5 @@
 install.packages(c("NbClust","cluster","flexclust","rpart","rpart.plot","party",
-                   "randomForest","e1071", "ggplot2"))
+                   "randomForest","e1071", "ggplot2", "RColorBrewer"))
 library("NbClust")
 library("cluster")
 library("flexclust")
@@ -9,6 +9,7 @@ library("party")
 library("randomForest")
 library("e1071")
 library("ggplot2")
+library("RColorBrewer")
 
 #Loading all the data.
 happiness_2015 <- read.csv("2015.csv")
@@ -32,8 +33,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
   aes(x=Country, y=Economy..GDP.per.Capita., fill=Economy..GDP.per.Capita.)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "red", high = "yellow")
 #Display ggplot
 plot + coord_flip()
 
@@ -51,8 +52,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
                aes(x=Country, y=Family, fill=Family)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "yellow", high = "green")
 #Display ggplot
 plot + coord_flip()
 
@@ -70,8 +71,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
                aes(x=Country, y=Health..Life.Expectancy., fill=Health..Life.Expectancy.)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "green", high = "blue")
 #Display ggplot
 plot + coord_flip()
 
@@ -89,8 +90,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
                aes(x=Country, y=Freedom, fill=Freedom)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "orange", high = "blue")
 #Display ggplot
 plot + coord_flip()
 
@@ -108,8 +109,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
                aes(x=Country, y=Trust..Government.Corruption., fill=Trust..Government.Corruption.)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "blue", high = "purple")
 #Display ggplot
 plot + coord_flip()
 
@@ -127,8 +128,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
                aes(x=Country, y=Generosity, fill=Generosity)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "green", high = "orange")
 #Display ggplot
 plot + coord_flip()
 
@@ -146,8 +147,8 @@ data_top$Country <- factor(data_top$Country, levels = rev(data_top$Country))
 plot <- ggplot(data=data_top,
                aes(x=Country, y=Dystopia.Residual, fill=Dystopia.Residual)) + 
   geom_bar(stat="identity") + 
-  theme_minimal() + 
-  theme(legend.position="none", axis.title.y=element_blank())
+  theme(legend.position="none", axis.title.y=element_blank()) +
+  scale_fill_gradient(low = "black", high = "purple")
 #Display ggplot
 plot + coord_flip()
 
