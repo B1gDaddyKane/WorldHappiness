@@ -1,5 +1,5 @@
 install.packages(c("NbClust","cluster","flexclust","rpart","rpart.plot","party",
-                   "randomForest","e1071", "ggplot2", "RColorBrewer"))
+                   "randomForest","e1071", "ggplot2", "RColorBrewer", "corrplot"))
 library("NbClust")
 library("cluster")
 library("flexclust")
@@ -10,6 +10,7 @@ library("randomForest")
 library("e1071")
 library("ggplot2")
 library("RColorBrewer")
+library("corrplot")
 
 #Loading all the data.
 happiness_2015 <- read.csv("2015.csv")
@@ -151,6 +152,23 @@ plot <- ggplot(data=data_top,
   scale_fill_gradient(low = "black", high = "purple")
 #Display ggplot
 plot + coord_flip()
+
+
+####Pair plot of the dataset####
+
+pairs(happiness_2015[,6:12], pch=20, cex=0.5, col="#00AFBB")
+
+
+####Heatmap of the dataset####
+
+columns <- sapply(happiness_2015, is.numeric)
+correlated_data <- cor(happiness_2015[, columns])
+corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
+
+data_no_rank <- happiness_2015[4:12]
+columns <- sapply(data_no_rank, is.numeric)
+correlated_data <- cor(data_no_rank[, columns])
+corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
 
 
 ####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
