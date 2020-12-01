@@ -159,7 +159,7 @@ plot + coord_flip()
 
 ####Pair plot of the dataset####
 
-pairs(happiness_2015[,6:12], pch=20, cex=0.5, col="#00AFBB")
+pairs(happiness_2015[,6:12], pch=20, cex=0.5, cex.labels=1.2, col="#00AFBB")
 
 
 ####Heatmap of the dataset####
@@ -168,7 +168,7 @@ columns <- sapply(happiness_2015, is.numeric)
 correlated_data <- cor(happiness_2015[, columns])
 corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
 
-data_no_rank <- happiness_2015[4:12]
+data_no_rank <- happiness_2015[2:12]
 columns <- sapply(data_no_rank, is.numeric)
 correlated_data <- cor(data_no_rank[, columns])
 corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
