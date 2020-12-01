@@ -1,5 +1,6 @@
 install.packages(c("NbClust","cluster","flexclust","rpart","rpart.plot","party",
-                   "randomForest","e1071", "ggplot2", "RColorBrewer", "corrplot"))
+                   "randomForest","e1071", "ggplot2", "RColorBrewer", "corrplot",
+                   "ggfortify", "ggrepel"))
 library("NbClust")
 library("cluster")
 library("flexclust")
@@ -11,6 +12,8 @@ library("e1071")
 library("ggplot2")
 library("RColorBrewer")
 library("corrplot")
+library("ggfortify")
+library("ggrepel")
 
 #Loading all the data.
 happiness_2015 <- read.csv("2015.csv")
@@ -174,8 +177,10 @@ corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yel
 ####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
 
 #Removing non-numerical data from 2015 and scaling it.
-num.15 <- happiness_2015[c(-1,-2,-3)]
-df.15 <- scale(num.15)
+num.15 <- happiness_2015[c(-1,-2,-3,-4,-5)]
+
+#Setting rownames to countries
+rownames(num.15) = happiness_2015$Country
 
 #Setting seed to avoid randomization .
 #Finding the optimal number for clusters.
@@ -198,7 +203,7 @@ fit.km.15$centers
 
 #We aggregate the data to determine variable means 
 #for each cluster in the original metric.
-aggregate(num.15,by=list(cluster=fit.km.15$cluster),mean)
+aggregate(num.15,by=list(cluster=fit.km.15$cluster), mean)
 
 #A cross-tabulation of Country and cluster membership is given.
 ct.country.km.15 <- table(happiness_2015$Country, fit.km.15$cluster)
@@ -208,30 +213,24 @@ ct.country.km.15
 ct.region.km.15 <- table(happiness_2015$Region, fit.km.15$cluster)
 ct.region.km.15
 
-#Setting rownames to countries
-rownames(num.15) = happiness_2015$Country
-
 #We partion around medoids (PAM) and make a cluster plot
 set.seed(1234)
-fit.pam.15 <- pam(num.15,k=3,stand = TRUE)
+fit.pam.15 <- pam(num.15, k=3, stand=TRUE)
 fit.pam.15$medoids
-clusplot(fit.pam.15, main="Bivariate Cluster Plot")
+clusplot(fit.pam.15, labels=3, main="Bivariate Cluster Plot")
 
 #ggplot2 version of cluster plot
+#autoplot(fit.pam.15, label=TRUE, frame=TRUE, frame.type='norm')
 
+#ggplot(fit.pam.15)
 
 ####----------------HIERARCHICAL CLUSTER ANALYSIS 2015-----------------####
 
 #Removing non-numerical data from 2015 and scaling it.
-num.15 <- happiness_2015[c(-1,-2,-3)]
+num.15 <- happiness_2015[c(-1,-2,-3,-4,-5)]
 
 #Setting rownames to countries
 rownames(num.15) = happiness_2015$Country
-
-#Find ud af hvordan vi får landenavne ind i dataframen uden at fucke med scaling.
-
-#num.15$Country <- factor(num.15$Country, levels= unique(happiness_2015$Happiness.Rank),)
-#levels(num.15$Country)
 
 df.15 <- scale(num.15)
 
@@ -247,30 +246,34 @@ barplot(table(nc.15$Best.n[1,]), xlab="Number of Clusters",
         ylab="Number of Criteria",
         main="Number of Clusters Chosen by 26 Criteria")
 
-clusters <- cutree(fit.average.15, k=6)
+clusters <- cutree(fit.average.15, k=8)
 table(clusters)
 
 aggregate(num.15, by=list(cluster=clusters),median)
 
 aggregate(as.data.frame(df.15),by=list(cluster=clusters),median)
 
-plot(fit.average.15, hang=-1, cex=.7, main="Average Linkage Clustering\n6 Cluster Solution")
-rect.hclust(fit.average.15, k=6)
+plot(fit.average.15, hang=-1, cex=.7, main="Average Linkage Clustering\n8 Cluster Solution")
+rect.hclust(fit.average.15, k=8)
 
-####-------------------------Classification 2015------------------------####
+####-----------------Classification Random Forest 2015------------------####
 
-num.15 <- happiness_2015[c(-1,-2,-3)]
+num.15 <- data.frame(happiness_2015[c(-1,-2,-3,-5)])
 
 set.seed(1234)
 train <- sample(nrow(num.15), 0.7*nrow(num.15))
 num.15.train <- num.15[train,]
 num.15.validate <- num.15[-train,]
-table(num.15.train$Happiness.Score)
-table(num.15.validate$Happiness.Score)
 
-fit.logit <- glm(as.factor(Happiness.Score)~., data=num.15.train, family = binomial(),
-                 control = list(maxit = 200))
+set.seed(1234)
+fit.forest <- randomForest(formula=Happiness.Score~., data=num.15.train,
+                           mtry=6, importance=TRUE)
+fit.forest
+importance(fit.forest, type=2)
 
+forest.pred <- predict(fit.forest, num.15.validate)
+forest.perf <- table(num.15.validate$Happiness.Score, forest.pred, dnn=c("Actual", "Predicted"))
+forest.perf
 
 ####----------------PARTIONING CLUSTER ANALYSIS FOR 2016----------------####
 
