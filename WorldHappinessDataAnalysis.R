@@ -17,10 +17,9 @@ library("ggrepel")
 
 #Loading all the data.
 happiness_2015 <- read.csv("2015.csv")
-happiness_2016 <- read.csv("2016.csv")
-happiness_2017 <- read.csv("2017.csv")
-happiness_2018 <- read.csv("2018.csv")
-happiness_2019 <- read.csv("2019.csv")
+
+head(happiness_2015)
+tail(happiness_2015)
 
 ####------------------------DATA VISUALIZATION--------------------------####
 
@@ -168,7 +167,7 @@ columns <- sapply(happiness_2015, is.numeric)
 correlated_data <- cor(happiness_2015[, columns])
 corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
 
-data_no_rank <- happiness_2015[2:12]
+data_no_rank <- happiness_2015[4:12]
 columns <- sapply(data_no_rank, is.numeric)
 correlated_data <- cor(data_no_rank[, columns])
 corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
@@ -219,10 +218,6 @@ fit.pam.15 <- pam(num.15, k=3, stand=TRUE)
 fit.pam.15$medoids
 clusplot(fit.pam.15, labels=3, main="Bivariate Cluster Plot")
 
-#ggplot2 version of cluster plot
-#autoplot(fit.pam.15, label=TRUE, frame=TRUE, frame.type='norm')
-
-#ggplot(fit.pam.15)
 
 ####----------------HIERARCHICAL CLUSTER ANALYSIS 2015-----------------####
 
@@ -256,6 +251,7 @@ aggregate(as.data.frame(df.15),by=list(cluster=clusters),median)
 plot(fit.average.15, hang=-1, cex=.7, main="Average Linkage Clustering\n8 Cluster Solution")
 rect.hclust(fit.average.15, k=8)
 
+
 ####-----------------Classification Random Forest 2015------------------####
 
 num.15 <- data.frame(happiness_2015[c(-1,-2,-3,-5)])
@@ -274,30 +270,4 @@ importance(fit.forest, type=2)
 forest.pred <- predict(fit.forest, num.15.validate)
 forest.perf <- table(num.15.validate$Happiness.Score, forest.pred, dnn=c("Actual", "Predicted"))
 forest.perf
-
-####----------------PARTIONING CLUSTER ANALYSIS FOR 2016----------------####
-
-
-####-----------------HIERARCHICAL CLUSTER ANALYSIS 2016-----------------####
-
-
-####----------------PARTIONING CLUSTER ANALYSIS FOR 2017----------------####
-
-
-####-----------------HIERARCHICAL CLUSTER ANALYSIS 2017-----------------####
-
-
-####----------------PARTIONING CLUSTER ANALYSIS FOR 2018----------------####
-
-
-####-----------------HIERARCHICAL CLUSTER ANALYSIS 2018-----------------####
-
-
-####----------------PARTIONING CLUSTER ANALYSIS FOR 2019----------------####
-
-
-####-----------------HIERARCHICAL CLUSTER ANALYSIS 2019-----------------####
-
-
-
 
