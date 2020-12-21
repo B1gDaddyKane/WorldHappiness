@@ -24,7 +24,15 @@ happiness_2019 <- read.csv("2019.csv")
 
 ####------------------------DATA VISUALIZATION--------------------------####
 
+#Watch variables and first few entries
+str(happiness_2015)
+
+#Make Region as factor
+happiness_2015$Region <- as.factor(happiness_2015$Region)
+str(happiness_2015)
 ####Bar plot of top 10 countries by GDP####
+
+
 
 #Sort data by GDP
 data_sorted <- happiness_2015[order(-happiness_2015$Economy..GDP.per.Capita.),]
@@ -173,6 +181,11 @@ columns <- sapply(data_no_rank, is.numeric)
 correlated_data <- cor(data_no_rank[, columns])
 corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yellow", "blue"))(200)) 
 
+####Boxplot of regions####
+
+box <- ggplot(happiness_2015,aes(x=Region, y=Happines.score)) + geom_boxplot(aes(fill=Region)) 
++ theme_bw() + 
+theme(axis.title = element_text(family = "Helvetica", size = (8)))
 
 ####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
 
