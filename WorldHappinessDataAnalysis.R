@@ -182,9 +182,11 @@ corrplot(correlated_data, method = 'number', col= colorRampPalette(c("red", "yel
 
 ####Boxplot of regions####
 
-box <- ggplot(happiness_2015,aes(x=Region, y=Happines.score)) + geom_boxplot(aes(fill=Region)) 
+box <- ggplot(happiness_2015,aes(x=Region, y=Happiness.Score)) + geom_boxplot(aes(fill=Region)) 
 + theme_bw() + 
 theme(axis.title = element_text(family = "Helvetica", size = (8)))
+#Display the plot
+box
 
 ####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
 
