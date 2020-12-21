@@ -14,6 +14,7 @@ library("RColorBrewer")
 library("corrplot")
 library("ggfortify")
 library("ggrepel")
+library("gridExtra")
 
 #Loading all the data.
 happiness_2015 <- read.csv("2015.csv")
@@ -188,7 +189,7 @@ theme(axis.title = element_text(family = "Helvetica", size = (8)))
 #Display the plot
 box
 
-####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015---------------####
+####-----------------PARTIONING CLUSTER ANALYSIS FOR 2015 Country Rownames---------------####
 
 #Removing non-numerical data from 2015 and scaling it.
 num.15 <- happiness_2015[c(-1,-2,-3,-4,-5)]
@@ -232,7 +233,6 @@ set.seed(1234)
 fit.pam.15 <- pam(num.15, k=3, stand=TRUE)
 fit.pam.15$medoids
 clusplot(fit.pam.15, labels=3, main="Bivariate Cluster Plot")
-
 
 ####----------------HIERARCHICAL CLUSTER ANALYSIS 2015-----------------####
 
